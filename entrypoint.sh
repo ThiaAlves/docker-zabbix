@@ -10,8 +10,8 @@ find /var/lib/mysql -type f -exec touch {} \;
 echo "==> Creating Zabbix database..."
 eval $(grep ^DBPassword /etc/zabbix/zabbix_server.conf)
 mysql -v <<SQL
-CREATE DATABASE zabbix CHARACTER SET UTF8 COLLATE UTF8_BIN;
-CREATE USER zabbix@localhost IDENTIFIED BY '${DBPassword}';
+CREATE DATABASE IF NOT EXISTS zabbix CHARACTER SET UTF8 COLLATE UTF8_BIN;
+CREATE USER IF NOT EXISTS zabbix@localhost IDENTIFIED BY '${DBPassword}';
 GRANT ALL PRIVILEGES ON zabbix.* TO zabbix@localhost;
 FLUSH PRIVILEGES;
 SQL
